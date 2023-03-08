@@ -11,7 +11,7 @@ _Emby 实用脚本集, 工具集_
 
 ## ranks.py
 
-> 生成周榜播放统计的海报, 用法：
+> 生成周榜播放统计的海报, 需配合 Playback Report 插件, 用法：
 
     # 先编辑 ranks.py 的配置项内容
     nano ranks.py
