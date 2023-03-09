@@ -1,4 +1,3 @@
-import os
 from sdk.emby import EmbyService
 from sdk.ranks_draw import RanksDraw
 
