@@ -40,7 +40,7 @@ class RanksDraw:
         index, offset_y = (0, 0)
         for i in all_ranks:
             # 榜单项数据
-            user_id, item_id, item_type, name, count, duarion = i
+            user_id, item_id, item_type, name, count, duarion = tuple(i)
             print(item_type, item_id, name, count)
             # 图片获取，剧集主封面获取
             if item_type != "Movie":
