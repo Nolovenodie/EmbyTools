@@ -1,5 +1,7 @@
 from sdk.emby import EmbyService
 from sdk.ranks_draw import RanksDraw
+from telegram.bot import Bot, Request
+from telegram import ParseMode
 
 # 配置项
 config = {
@@ -7,6 +9,11 @@ config = {
     "host": "",
     # Emby Apikey
     "api_key": "",
+    # Bot setting
+    "bot_key": "",
+    "bot_proxy": "",  # "http://127.0.0.1:7890/",
+    "send_channel": "@FreeEmbyUpdate",
+    "send_group": "@FreeEmbyGroup",
     # 向前获取数据的天数
     "days": 7,
 }
@@ -25,4 +32,22 @@ if not success:
 
 # 绘制海报
 draw.draw(movies, tvshows)
-draw.save()
+path = draw.save()
+
+# 发送海报
+proxy = Request(proxy_url=config["bot_proxy"])
+bot = Bot(token=config["bot_key"], request=proxy)
+text = "🌟*过去7日观影排行*\r\n\r\n"
+text += "🏷 \#WeeklyRanks\r\n"
+text += "💫 [» 𝙈𝙞𝙨𝙩𝙮 «](t.me/FreeEmby) 丨 [» 𝘾𝙝𝙖𝙣𝙣𝙚𝙡 «](t.me/FreeEmbyChannel)"
+msg = bot.send_photo(
+    chat_id=config["send_channel"],
+    photo=open(path, "rb"),
+    caption=text,
+    parse_mode=ParseMode.MARKDOWN_V2
+)
+bot.forward_message(
+    chat_id=config["send_group"],
+    from_chat_id=config["send_channel"],
+    message_id=msg.message_id
+)

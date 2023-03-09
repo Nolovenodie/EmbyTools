@@ -82,3 +82,4 @@ class RanksDraw:
 
     def save(self, save_path=os.path.join("ret", "ranks", datetime.now(pytz.timezone("Asia/Shanghai")).strftime("%Y-%m-%d.jpg"))):
         self.bg.save(save_path)
+        return save_path
