@@ -10,7 +10,7 @@ config = {
     # Emby Apikey
     "api_key": "",
     # Bot setting
-    "bot_key": "",
+    "bot_key": None, # 为 None 无需推送, 否则请设为 Bot 密钥
     "bot_proxy": "",  # "http://127.0.0.1:7890/",
     "send_channel": "@FreeEmbyUpdate",
     "send_group": "@FreeEmbyGroup",
@@ -35,6 +35,8 @@ draw.draw(movies, tvshows)
 path = draw.save()
 
 # 发送海报
+if not config["bot_key"]:
+    exit("无需推送, 运行结束, 海报: " + path)
 proxy = Request(proxy_url=config["bot_proxy"])
 bot = Bot(token=config["bot_key"], request=proxy)
 text = "🌟*过去7日观影排行*\r\n\r\n"
